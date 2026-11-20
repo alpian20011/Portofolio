@@ -38,14 +38,13 @@ module.exports = {
 
   // "url" kosong = tombol nonaktif ("Segera hadir"). Isi dengan URL asli project.
   projects: [
-    { name: "SyahPay",      logo: "/image/syahpay.jpg",     url: "", description: "Layanan pembayaran digital yang praktis dan mudah digunakan." },
-    { name: "Syahpedia",    logo: "/image/syahpedia.jpg",   url: "", description: "Platform layanan digital dalam satu tempat." },
-    { name: "Syah Shop",    logo: "/image/syahshop.jpg",    url: "", description: "Toko online untuk berbagai kebutuhan digital." },
-    { name: "Syah Topup",   logo: "/image/syahtopup.jpg",   url: "", description: "Top up game dan layanan digital dengan proses cepat." },
-    { name: "Syah Premium", logo: "/image/syahpremium.jpg", url: "", description: "Layanan akun premium aplikasi dan hiburan." }
+    { name: "SyahPay",      logo: "/image/syahpay.jpg",     url: "https://syahpay.biz.id", description: "Layanan pembayaran digital yang praktis dan mudah digunakan." },
+    { name: "Syahpedia",    logo: "/image/syahpedia.jpg",   url: "https://syahpedia.my.id", description: "Platform layanan digital dalam satu tempat." },
+    { name: "Syah Shop",    logo: "/image/syahshop.jpg",    url: "https://toko.syah.biz.id", description: "Toko online untuk berbagai kebutuhan digital." },
+    { name: "Syah Topup",   logo: "/image/syahtopup.jpg",   url: "https://syah-topup.my.ud", description: "Top up game dan layanan digital dengan proses cepat." },
+    { name: "Syah Premium", logo: "/image/syahpremium.jpg", url: "https://myprem.syah.biz.id", description: "Layanan akun premium aplikasi dan hiburan." }
   ],
 
-  // type: email | whatsapp | instagram | github | telegram | link
   // Contoh: { type: "email", label: "Email", value: "nama@domain.com", url: "mailto:nama@domain.com" }
-  contacts: []
+  contacts: [{ type: "email", label: "Email", valu: "alpincodeid@gmail.com", url: "mailto:alpincodeid@gmail.com" }]
 };
