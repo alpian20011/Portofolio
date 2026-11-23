@@ -1,42 +1,131 @@
 <%
 const A = c.about || {};
+const personName = c.name || 'Alpiansyah';
+const role = c.role || 'Programmer & Web Developer';
+const tagline = c.tagline || 'Senang mempelajari hal baru dan membangun sesuatu melalui teknologi.';
+const siteUrl = (c.siteUrl || '').replace(/\/$/, '');
+const photoUrl = /^https?:\/\//i.test(c.photo || '')
+  ? c.photo
+  : (siteUrl ? siteUrl + (c.photo || '') : (c.photo || ''));
 const place = (A.residence || '').split(',').slice(-2).join(',').trim();
-const ld = JSON.stringify({ '@context': 'https://schema.org', '@type': 'Person', name: c.name, jobTitle: c.role, url: c.siteUrl || undefined, homeLocation: A.residence }).replace(/</g, '\\u003c');
+const ld = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: 'Alpiansyah',
+  alternateName: ['Piantech', 'Mr Piantech'],
+  description: 'Alpiansyah, dikenal sebagai Piantech, seorang programmer dan web developer yang mulai mempelajari coding sejak usia 11 tahun.',
+  jobTitle: role,
+  url: siteUrl || undefined,
+  image: photoUrl || undefined,
+  homeLocation: A.residence || undefined,
+  knowsAbout: [
+    'Web Development',
+    'JavaScript',
+    'Dart',
+    'Python',
+    'PHP',
+    'HTML',
+    'CSS',
+    'Programming'
+  ]
+}).replace(/</g, '\\u003c');
+
+const pageTitle = `${personName} (Piantech) — Programmer & Web Developer`;
+const pageDescription = `Portofolio ${personName}, dikenal sebagai Piantech. Programmer dan web developer yang mulai belajar coding sejak usia 11 tahun. Lihat profil, keahlian, dan project saya.`;
 %>
 <!DOCTYPE html>
 <html lang="id">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title><%= c.name %> — Portofolio</title>
-<meta name="description" content="Portofolio <%= c.name %>, <%= c.role %> dari <%= place %>. Lihat project dan keahlian saya.">
+
+<title><%= pageTitle %></title>
+<meta name="description" content="<%= pageDescription %>">
+<meta name="author" content="Alpiansyah">
+<meta name="robots" content="index, follow">
 <meta name="theme-color" content="#dbe7fb">
-<meta property="og:type" content="website">
-<meta property="og:title" content="<%= c.name %> — Portofolio">
-<meta property="og:description" content="<%= c.tagline %>">
-<meta property="og:image" content="<%= c.siteUrl ? c.siteUrl.replace(/\/$/, '') + c.photo : c.photo %>">
-<% if (c.siteUrl) { %><link rel="canonical" href="<%= c.siteUrl %>"><meta property="og:url" content="<%= c.siteUrl %>"><% } %>
+
+<% if (siteUrl) { %>
+<link rel="canonical" href="<%= siteUrl %>">
+<% } %>
+
+<meta property="og:type" content="profile">
+<meta property="og:site_name" content="Alpiansyah | Piantech">
+<meta property="og:title" content="<%= pageTitle %>">
+<meta property="og:description" content="<%= pageDescription %>">
+<% if (photoUrl) { %>
+<meta property="og:image" content="<%= photoUrl %>">
+<% } %>
+<% if (siteUrl) { %>
+<meta property="og:url" content="<%= siteUrl %>">
+<% } %>
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="<%= pageTitle %>">
+<meta name="twitter:description" content="<%= pageDescription %>">
+<% if (photoUrl) { %>
+<meta name="twitter:image" content="<%= photoUrl %>">
+<% } %>
+
+<% if (c.photo) { %>
 <link rel="icon" href="<%= c.photo %>">
+<% } %>
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Sora:wght@500;600;700&display=swap" rel="stylesheet">
+
 <style><%- include('../public/css/style.css') %></style>
+
 <script>
 document.documentElement.classList.add('js');
-function fb(i){i.onerror=null;var l=(i.getAttribute('data-label')||'?').charAt(0).toUpperCase().replace(/[<>&]/,'?');i.src='data:image/svg+xml,'+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#9dbcf6"/><stop offset="1" stop-color="#4a73c4"/></linearGradient></defs><rect width="400" height="400" fill="url(#g)"/><text x="50%" y="54%" font-family="Arial" font-weight="700" font-size="150" fill="#fff" text-anchor="middle" dominant-baseline="middle">'+l+'</text></svg>')}
-function fbs(i){var p=document.createElement('div');p.className='ph';p.textContent=(i.getAttribute('data-label')||'?').slice(0,2);i.replaceWith(p)}
+
+function fb(i) {
+  i.onerror = null;
+  var l = (i.getAttribute('data-label') || '?')
+    .charAt(0).toUpperCase().replace(/[<>&]/, '?');
+
+  i.src = 'data:image/svg+xml,' + encodeURIComponent(
+    '<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400">' +
+    '<defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1">' +
+    '<stop stop-color="#9dbcf6"/><stop offset="1" stop-color="#4a73c4"/>' +
+    '</linearGradient></defs>' +
+    '<rect width="400" height="400" fill="url(#g)"/>' +
+    '<text x="50%" y="54%" font-family="Arial" font-weight="700" font-size="150" fill="#fff" text-anchor="middle" dominant-baseline="middle">' +
+    l +
+    '</text></svg>'
+  );
+}
+
+function fbs(i) {
+  var p = document.createElement('div');
+  p.className = 'ph';
+  p.textContent = (i.getAttribute('data-label') || '?').slice(0, 2);
+  i.replaceWith(p);
+}
 </script>
+
 <script type="application/ld+json"><%- ld %></script>
 </head>
+
 <body>
 <div id="loader" aria-hidden="true"><span></span></div>
 <div class="bg" aria-hidden="true"><i></i><i></i><i></i></div>
 
 <header class="nav glass" id="nav">
-  <a href="#home" class="brand"><%= c.name %></a>
-  <button class="burger" id="burger" aria-label="Buka menu" aria-expanded="false" aria-controls="menu"><span></span><span></span></button>
+  <a href="#home" class="brand">Piantech</a>
+
+  <button class="burger" id="burger" aria-label="Buka menu" aria-expanded="false" aria-controls="menu">
+    <span></span>
+    <span></span>
+  </button>
+
   <nav id="menu" aria-label="Navigasi utama">
-    <a href="#about">Tentang</a><a href="#languages">Bahasa</a><a href="#skills">Skill</a><a href="#projects">Project</a><a href="#contact">Kontak</a>
+    <a href="#about">Tentang</a>
+    <a href="#languages">Bahasa</a>
+    <a href="#skills">Skill</a>
+    <a href="#projects">Project</a>
+    <a href="#contact">Kontak</a>
   </nav>
 </header>
 
@@ -44,59 +133,127 @@ function fbs(i){var p=document.createElement('div');p.className='ph';p.textConte
   <section class="hero container" id="home">
     <div class="hero-text">
       <p class="hello">Halo, saya</p>
-      <h1><%= c.name %></h1>
-      <p class="role"><%= c.role %></p>
-      <p class="lead"><%= c.tagline %></p>
+      <h1><%= personName %></h1>
+      <p class="role"><%= role %></p>
+      <p class="lead"><%= tagline %></p>
+
       <div class="actions">
         <a class="btn primary" href="#projects">Lihat project</a>
         <a class="btn ghost" href="#contact">Hubungi saya</a>
       </div>
     </div>
-    <div class="hero-photo" data-tilt-max="9">
+
+    <div class="hero-photo">
       <div class="ring"></div>
+
       <button class="avatar" id="avatarBtn" aria-label="Perbesar foto profil">
-        <img id="avatarImg" src="<%= c.photo %>" alt="Foto profil <%= c.name %>" data-label="<%= c.name %>" onerror="fb(this)" fetchpriority="high">
+        <img
+          id="avatarImg"
+          src="<%= c.photo %>"
+          alt="Foto profil <%= personName %>"
+          data-label="<%= personName %>"
+          onerror="fb(this)"
+          fetchpriority="high"
+        >
       </button>
-      <span class="chip c1">Coding</span><span class="chip c2"><%= (A.residence || '').split(',').slice(-2)[0].trim() %></span>
+
+      <span class="chip c1">Piantech</span>
+      <span class="chip c2">Since 11</span>
     </div>
   </section>
 
   <section class="section container" id="about">
     <h2 class="reveal">Tentang saya</h2>
+
     <div class="grid about-grid">
       <div class="card reveal">
         <h3>Profil</h3>
-        <p class="k">Tempat lahir</p><p class="v"><%= A.birthplace %></p><br>
-        <p class="k">Tempat tinggal</p><p class="v"><%= A.residence %></p>
+
+        <p class="k">Nama lengkap</p>
+        <p class="v">Alpiansyah</p>
+        <br>
+
+        <p class="k">Nama panggung</p>
+        <p class="v">Piantech</p>
+        <br>
+
+        <p class="k">Tempat lahir</p>
+        <p class="v"><%= A.birthplace || '-' %></p>
+        <br>
+
+        <p class="k">Tempat tinggal</p>
+        <p class="v"><%= A.residence || '-' %></p>
       </div>
+
       <div class="card reveal" style="--d:.08s">
-        <h3>Hobi</h3>
-        <div class="tags"><% (A.hobbies || []).forEach(h => { %><span class="tag"><%= h %></span><% }) %></div>
+        <h3>Perjalanan coding</h3>
+        <p class="k">Mulai belajar</p>
+        <p class="v">Sejak usia 11 tahun</p>
+        <br>
+        <p class="k">Bidang yang diminati</p>
+        <p class="v">Programming, Web Development, dan teknologi</p>
+        <br>
+        <p class="k">Identitas</p>
+        <p class="v">Piantech / Syah</p>
       </div>
+
       <div class="card reveal" style="--d:.16s">
+        <h3>Hobi</h3>
+        <div class="tags">
+          <% (A.hobbies || []).forEach(h => { %>
+            <span class="tag"><%= h %></span>
+          <% }) %>
+        </div>
+      </div>
+
+      <div class="card reveal" style="--d:.24s">
         <h3>Pendidikan</h3>
-        <ul class="edu"><% (A.education || []).forEach(e => { %><li><span><%= e.level %><% if (e.school) { %><small><%= e.school %></small><% } %></span></li><% }) %></ul>
+        <ul class="edu">
+          <% (A.education || []).forEach(e => { %>
+            <li>
+              <span>
+                <%= e.level %>
+                <% if (e.school) { %>
+                  <small><%= e.school %></small>
+                <% } %>
+              </span>
+            </li>
+          <% }) %>
+        </ul>
       </div>
     </div>
   </section>
 
   <section class="section container" id="languages">
     <h2 class="reveal">Bahasa yang dikuasai</h2>
+
     <div class="grid lang-grid">
       <% (c.languages || []).forEach((l, i) => { %>
-      <div class="card lang reveal" style="--d:<%= i * 0.08 %>s"><span class="badge"><%= l.code %></span><h3 style="margin:0"><%= l.name %></h3></div>
+        <div class="card lang reveal" style="--d:<%= i * 0.08 %>s">
+          <span class="badge"><%= l.code %></span>
+          <h3 style="margin:0"><%= l.name %></h3>
+        </div>
       <% }) %>
     </div>
   </section>
 
   <section class="section container" id="skills">
     <h2 class="reveal">Bahasa pemrograman</h2>
+
     <div class="grid skill-grid">
       <% (c.skills || []).forEach((s, i) => { %>
-      <div class="card skill reveal" style="--d:<%= i * 0.08 %>s">
-        <img src="<%= s.icon %>" alt="Logo <%= s.name %>" width="64" height="64" loading="lazy" data-label="<%= s.name %>" onerror="fbs(this)">
-        <h3><%= s.name %></h3>
-      </div>
+        <div class="card skill reveal" style="--d:<%= i * 0.08 %>s">
+          <img
+            src="<%= s.icon %>"
+            alt="Logo <%= s.name %>"
+            width="64"
+            height="64"
+            loading="lazy"
+            data-label="<%= s.name %>"
+            onerror="fbs(this)"
+          >
+          <h3><%= s.name %></h3>
+        </div>
       <% }) %>
     </div>
   </section>
@@ -104,45 +261,75 @@ function fbs(i){var p=document.createElement('div');p.className='ph';p.textConte
   <section class="section container" id="projects">
     <h2 class="reveal">Project saya</h2>
     <p class="sub reveal">Website dan layanan yang sudah saya bangun.</p>
+
     <div class="grid project-grid">
       <% (c.projects || []).forEach((p, i) => { %>
-      <article class="card project reveal" style="--d:<%= (i % 3) * 0.08 %>s">
-        <img class="logo" src="<%= p.logo %>" alt="Logo <%= p.name %>" width="76" height="76" loading="lazy" data-label="<%= p.name %>" onerror="fb(this)">
-        <h3><%= p.name %></h3>
-        <p><%= p.description %></p>
-        <% if (p.url && p.url.trim()) { %>
-          <a class="btn primary" href="<%= p.url %>" target="_blank" rel="noopener noreferrer" aria-label="Kunjungi website <%= p.name %>">Kunjungi website <%- icon('arrow') %></a>
-        <% } else { %>
-          <span class="btn primary" aria-disabled="true">Segera hadir</span>
-        <% } %>
-      </article>
+        <article class="card project reveal" style="--d:<%= (i % 3) * 0.08 %>s">
+          <img
+            class="logo"
+            src="<%= p.logo %>"
+            alt="Logo <%= p.name %>"
+            width="76"
+            height="76"
+            loading="lazy"
+            data-label="<%= p.name %>"
+            onerror="fb(this)"
+          >
+
+          <h3><%= p.name %></h3>
+          <p><%= p.description %></p>
+
+          <% if (p.url && p.url.trim()) { %>
+            <a
+              class="btn primary"
+              href="<%= p.url %>"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Kunjungi website <%= p.name %>"
+            >
+              Kunjungi website <%- icon('arrow') %>
+            </a>
+          <% } else { %>
+            <span class="btn primary" aria-disabled="true">Segera hadir</span>
+          <% } %>
+        </article>
       <% }) %>
     </div>
   </section>
 
   <section class="section container" id="contact">
     <h2 class="reveal">Kontak</h2>
+
     <div class="grid contact-grid">
-      <% if ((c.contacts || []).length) { c.contacts.forEach((k) => { const ext = /^https?:/.test(k.url || ''); %>
-        <<%= k.url ? 'a' : 'div' %> class="card contact reveal"<% if (k.url) { %> href="<%= k.url %>"<% if (ext) { %> target="_blank" rel="noopener noreferrer"<% } } %>>
-          <span class="ic"><%- icon(k.type) %></span>
-          <div><p class="k"><%= k.label %></p><p class="v"><%= k.value %></p></div>
-        </<%= k.url ? 'a' : 'div' %>>
-      <% }) } else { %>
-        <p class="empty reveal">Informasi kontak belum ditambahkan. Atur lewat <code>contacts</code> di config.js.</p>
+      <% if ((c.contacts || []).length) { %>
+        <% c.contacts.forEach((k) => { const ext = /^https?:/.test(k.url || ''); %>
+          <<%= k.url ? 'a' : 'div' %> class="card contact reveal"<% if (k.url) { %> href="<%= k.url %>"<% if (ext) { %> target="_blank" rel="noopener noreferrer"<% } } %>>
+            <span class="ic"><%- icon(k.type) %></span>
+
+            <div>
+              <p class="k"><%= k.label %></p>
+              <p class="v"><%= k.value %></p>
+            </div>
+          </<%= k.url ? 'a' : 'div' %>>
+        <% }) %>
+      <% } else { %>
+        <p class="empty reveal">
+          Informasi kontak belum ditambahkan. Atur lewat
+          <code>contacts</code> di config.js.
+        </p>
       <% } %>
     </div>
   </section>
 </main>
 
 <footer class="footer container">
-  <p><strong><%= c.name %></strong> — <%= place %></p>
-  <p>&copy; <%= year %> <%= c.name %>. Semua hak dilindungi.</p>
+  <p><strong>Alpiansyah — Piantech</strong><% if (place) { %> · <%= place %><% } %></p>
+  <p>&copy; <%= year %> Alpiansyah. Semua hak dilindungi.</p>
 </footer>
 
 <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Foto profil" hidden>
   <button class="close" id="lbClose" aria-label="Tutup">&times;</button>
-  <img id="lbImg" alt="Foto profil <%= c.name %>">
+  <img id="lbImg" alt="Foto profil <%= personName %>">
 </div>
 
 <script src="/js/script.js" defer></script>
